@@ -3,6 +3,7 @@ courier-tracking
 1.PROJECT_DESCRIPTION
 2.GENERAL_NOTES
 3.LOCAL_DEVELOPMENT_SETUP
+4.HOW_TO_RUN_WITHOUT_IDE
 
 1.PROJECT_DESCRIPTION
 
@@ -46,4 +47,11 @@ no external db required
 
     1- streamGeolocationOfCourier
     2- getTotalDistanceByCourier
+
+4.HOW_TO_RUN_WITHOUT_IDE
+
+To run the project without IDE, from terminal go to projects root directory.
+mvn package => generates .jar file
+go to target directory
+java -jar CourierTracking-1.0-SNAPSHOT.jar to run the application
 

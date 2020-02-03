@@ -27,6 +27,8 @@ import java.util.List;
 @Transactional
 public class CourierTrackingServiceImpl implements CourierTrackingService {
     private static final Logger LOGGER = LoggerFactory.getLogger(CourierTrackingServiceImpl.class);
+
+    private final DistanceLoggerService distanceLoggerService;
     private final StoreRepo storeRepo;
     private final CourierRepo courierRepo;
     private final StoreTimeRepo storeTimeRepo;
@@ -35,7 +37,8 @@ public class CourierTrackingServiceImpl implements CourierTrackingService {
     private static boolean initialized = false;
 
     @Autowired
-    public CourierTrackingServiceImpl(StoreRepo storeRepo, CourierRepo courierRepo, StoreTimeRepo storeTimeRepo, Dto2Entity dto2Entity) {
+    public CourierTrackingServiceImpl(DistanceLoggerService distanceLoggerService, StoreRepo storeRepo, CourierRepo courierRepo, StoreTimeRepo storeTimeRepo, Dto2Entity dto2Entity) {
+        this.distanceLoggerService = distanceLoggerService;
         this.storeRepo = storeRepo;
         this.courierRepo = courierRepo;
         this.storeTimeRepo = storeTimeRepo;
@@ -106,15 +109,19 @@ public class CourierTrackingServiceImpl implements CourierTrackingService {
 
     private void countEntrance(Store store, Courier courier, LocalDateTime time) {
         List<StoreTime> storeTimes = storeTimeRepo.findAllByStoreAndCourierAndTimeIsGreaterThanEqual(store, courier, time.minusMinutes(1));
+        createStoreTime(store, courier, time);
+        if(!storeTimes.isEmpty())
+            return;
+
+        distanceLoggerService.log(courier.getId(), store.getName());
+    }
+
+    private void createStoreTime(Store store, Courier courier, LocalDateTime time) {
         StoreTime storeTime = new StoreTime();
         storeTime.setTime(time);
         storeTime.setCourier(courier);
         storeTime.setStore(store);
         storeTimeRepo.save(storeTime);
-        if(!storeTimes.isEmpty())
-            return;
-
-        LOGGER.info(String.format("Courier : %d , Store : %s", courier.getId(), store.getName()));
     }
 
     private void calculateCourierNewPosition(Courier courier, Double latitude, Double longitude) {
