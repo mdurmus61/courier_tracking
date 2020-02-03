@@ -34,17 +34,10 @@ public class MainServiceTest {
 
     @Test
     public void create_user()  {
-        Courier c = service.createCourier(1L, 10.0, 10.0);
+        Courier c = service.createCourier(4L, 10.0, 10.0);
 
         Assert.assertNotNull(c);
-    }
-
-    @Test
-    public void create_user2()  {
-        Courier c = service.createCourier(1L, 10.0, 10.0);
-        Assert.assertEquals(1,courierRepo.findAll().size());
-
-
+        Assert.assertEquals(4, courierRepo.findAll().size());
     }
 
 

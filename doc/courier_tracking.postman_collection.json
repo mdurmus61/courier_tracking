@@ -1,0 +1,71 @@
+{
+	"info": {
+		"_postman_id": "873a943e-a9f8-4436-bea8-7cc01181adfb",
+		"name": "courier_tracking",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "streamGeolocationOfCourier",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"courierId\" : 2,\n\t\"latitude\": 44.0,\n\t\"longitude\": 35.0,\n\t\"time\": \"2020-02-03T19:33:49\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/ct/stream/geolocation",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"ct",
+						"stream",
+						"geolocation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getTotalDistanceByCourier",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/ct/total/distance/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"ct",
+						"total",
+						"distance",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

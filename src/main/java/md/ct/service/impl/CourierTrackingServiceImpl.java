@@ -74,6 +74,7 @@ public class CourierTrackingServiceImpl implements CourierTrackingService {
         courier.setLongitude(longitude);
         courier.setLatitude(latitude);
         courier.setTotalDistance((double)0);
+        courier = courierRepo.save(courier);
         return courier;
     }
 
